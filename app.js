@@ -28,7 +28,7 @@ function error(inputField, inpuType) {
 }
 function inputValidation() {
   const mailRG = /^.+@[a-z]+\.[a-z]+(\.[a-z]+)?$/i;
-  const phoneRG = /^[0-9]{10}$/;
+  const phoneRG = /^(09)[0-9]{8}$/;
   let invalid = false;
   if (inputName.value === '') {
     invalid = true;
@@ -56,23 +56,25 @@ function inputValidation() {
 }
 
 
-submitBtn.addEventListener('click', () => {
-  const errs = Array.from(document.getElementsByClassName('error'));
-  if (errs.length) {
-    errs.forEach((err) => {
-      err.remove();
-    });
-  }
-  if (inputValidation()) {
-    return 0;
-  }
-  let type;
-  if (inputRadio1.checked) {
-    type = inputRadio1.value;
-  } else if (inputRadio2.checked) {
-    type = inputRadio2.value;
-  }
-  alert(`
+document.querySelector('#form')
+  .addEventListener('submit', (e) => {
+    e.preventDefault();
+    const errs = Array.from(document.getElementsByClassName('error'));
+    if (errs.length) {
+      errs.forEach((err) => {
+        err.remove();
+      });
+    }
+    if (inputValidation()) {
+      return 0;
+    }
+    let type;
+    if (inputRadio1.checked) {
+      type = inputRadio1.value;
+    } else if (inputRadio2.checked) {
+      type = inputRadio2.value;
+    }
+    alert(`
     暱稱：${inputName.value}
     電子郵件：${inputEmail.value}
     手機號碼：${inputPhone.value}
@@ -80,4 +82,4 @@ submitBtn.addEventListener('click', () => {
     怎麼知道這個活動的？：${inputHow.value}
     其他：${inputOther.value}
     `);
-});
+  });
